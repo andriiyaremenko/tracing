@@ -6,6 +6,8 @@
 
 // How to use:
 //
+// package main
+//
 // import (
 // 	"net/http"
 //
@@ -16,7 +18,7 @@
 //
 // func main() {
 // 	r := chi.NewRouter()
-// 	r.Use(tracing.Middleware(tracing.DefaultMetadataOptions, tracing.FromStringer(uuid.New)))
+// 	r.Use(tracing.Middleware(tracing.DefaultMetadataOptions, uuid.New))
 //
 // 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 // 		w.Write([]byte("welcome"))
