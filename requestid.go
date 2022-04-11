@@ -53,11 +53,11 @@ func RequestIDWriteHeader(requestID string) func(http.Header, RequestID) {
 
 // RequestID options with provided Header reader and writer.
 func RequestIDOptions(
-	from func(http.Header, string) (RequestID, bool),
-	set func(http.Header, RequestID),
+	read func(http.Header, string) (RequestID, bool),
+	write func(http.Header, RequestID),
 ) Options[RequestID] {
 	return func() (ReadHeader[RequestID], WriteHeader[RequestID], Next[RequestID]) {
-		return from, set, NextRequestID
+		return read, write, NextRequestID
 	}
 }
 

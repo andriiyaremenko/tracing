@@ -6,23 +6,35 @@ import (
 )
 
 const (
-	HeaderRequestID     string = "X-Request-Id"
-	HeaderCausationID   string = "X-Causation-Id"
+	// Default RequestID header name.
+	HeaderRequestID string = "X-Request-Id"
+	// Default CausationID header name.
+	HeaderCausationID string = "X-Causation-Id"
+	// Default CorrelationID header name.
 	HeaderCorrelationID string = "X-Correlation-Id"
 )
 
+// Tracing reader from Header.
 type ReadHeader[T Metadata | RequestID] func(http.Header, string) (T, bool)
+
+// Tracing writer to Header.
 type WriteHeader[T Metadata | RequestID] func(http.Header, T)
+
+// New Tracing for next event in execution chain.
 type Next[T Metadata | RequestID] func(T, string) T
 
+// Middleware options.
 type Options[T Metadata | RequestID] func() (ReadHeader[T], WriteHeader[T], Next[T])
 
+// Mapping function for getID argument.
 func FromStringer(newStringer func() fmt.Stringer) func() string {
 	return func() string {
 		return newStringer().String()
 	}
 }
 
+// Tracing middleware.
+// Reads Tracing headers and writes next Tracing to Header and context.
 func Middleware[T Metadata | RequestID, Opts Options[T]](
 	opts Opts,
 	getID func() string,
