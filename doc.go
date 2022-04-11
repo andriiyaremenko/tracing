@@ -18,7 +18,7 @@
 //
 // func main() {
 // 	r := chi.NewRouter()
-// 	r.Use(tracing.Middleware(tracing.DefaultMetadataOptions, uuid.New))
+// 	r.Use(tracing.Middleware(tracing.DefaultMetadataOptions, uuid.NewString))
 //
 // 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 // 		w.Write([]byte("welcome"))
